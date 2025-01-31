@@ -31,13 +31,13 @@ deposit = np.around(npf.pmt(interest_rate/12, nper, periods,-max(fv_list), 1), d
 rata = deposit.sum()/60
 print("Miesięcznie należy wpłacać do banku: " + str("{:.2f}".format(rata)))
 
-# wykres danych
-plt.plot(fv_list_np,label='cena mieszkania')
-plt.plot(deposit.cumsum(),label='wartość lokaty')
-plt.legend(loc='upper left')
-plt.xlabel('Liczba okresów')
-plt.ylabel('wartość w zł')
-plt.show()
+# # wykres danych
+# plt.plot(fv_list_np,label='cena mieszkania')
+# plt.plot(deposit.cumsum(),label='wartość lokaty')
+# plt.legend(loc='upper left')
+# plt.xlabel('Liczba okresów')
+# plt.ylabel('wartość w zł')
+# plt.show()
 
 
 

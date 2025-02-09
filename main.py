@@ -1,3 +1,5 @@
+from itertools import accumulate
+
 import numpy_financial as npf
 import numpy as np
 import matplotlib.pyplot as plt
@@ -24,20 +26,30 @@ for i in range(1, nper+1):
 
 fv_list_np = np.array(fv_list)
 fv_list_np.sum()
-#
-print('---')
-deposit = np.around(npf.pmt(interest_rate/12, nper, periods,-max(fv_list), 1), decimals=2)
-#
-rata = deposit.sum()/60
-print("Miesięcznie należy wpłacać do banku: " + str("{:.2f}".format(rata)))
 
-# # wykres danych
-# plt.plot(fv_list_np,label='cena mieszkania')
-# plt.plot(deposit.cumsum(),label='wartość lokaty')
-# plt.legend(loc='upper left')
-# plt.xlabel('Liczba okresów')
-# plt.ylabel('wartość w zł')
-# plt.show()
+print('---')
+# miesięczna rata
+pmt = np.around(npf.pmt(interest_rate/12, nper, 0,-max(fv_list), 1), decimals=2)
+
+# wartość lokaty z procentem składanym dla każdego miesiąca
+deposite_value = []
+accumulated = 0
+for i in range(1, nper+1):
+    accumulated = accumulated * (1 + interest_rate/12) + pmt
+    deposite_value.append(accumulated)
+
+    deposite = np.array(deposite_value)
+    rata = pmt
+    print("Miesięcznie należy wpłacać do banku: " + str("{:.2f}".format(rata)))
+
+
+# wykres danych
+plt.plot(fv_list_np,label='cena mieszkania')
+plt.plot(deposite_value,label='wartość lokaty')
+plt.legend(loc='upper left')
+plt.xlabel('Liczba okresów')
+plt.ylabel('wartość w zł')
+plt.show()
 
 
 
